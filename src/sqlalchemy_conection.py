@@ -1,20 +1,37 @@
 import psycopg2
-from sqlalchemy import create_engine, URL, MetaData, Table
+from sqlalchemy import create_engine, URL, MetaData, Table, select, inspect
 
 database_url = URL.create(
     "postgresql+psycopg2",
     username="admin",
     password="password",
-    host="postgis:5432",
+    host="postgis",
+    port= "5432",
     database="metro_cdmx",
 )
-
-engine = create_engine(database_url)
+# Create engine
+engine = create_engine(database_url,)
+inspector = inspect(engine)
+table_names = inspector.get_table_names()
+print(table_names)
 
 metadata = MetaData()
 
-albatross = Table('gps-albatros-isla-guadalupe', metadata, autoload=True, autoload_with=engine, schema='public')
+albatross = Table(
+    'gps-albatros-isla-guadalupe', 
+    metadata, 
+    autoload_with=engine, 
+    schema='public'
+)
 
-print(metadata.columns.keys())
-print(engine.table_names())
+metadata.reflect(bind=engine)
 
+# Set connection
+connection = engine.connect()
+
+query = select(*[albatross])
+print(query)
+
+results = connection.execute(query).fetchall()
+
+print(results[0][1])

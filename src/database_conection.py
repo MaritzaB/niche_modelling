@@ -4,8 +4,8 @@ db_params = {
     "dbname": "metro_cdmx",
     "user": "admin",
     "password": "password",
-    "host": "postgis",  # Replace with your database host
-    "port": "5432",       # Replace with your database port (usually 5432)
+    "host": "postgis",
+    "port": "5432",
 }
 
 try:
