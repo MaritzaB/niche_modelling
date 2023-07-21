@@ -1,2 +1,2 @@
 conection:
-	docker network connect postgis_net <container_id>
+	docker network connect qgis_devtools_postgis_net 1fbf0b62a2e7

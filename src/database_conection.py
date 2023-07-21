@@ -13,12 +13,12 @@ try:
     print("Connection to PostgreSQL database successful!")
 
     # Your database operations go here
-    cur.execute("select * from 'gps-albatros-isla-guadalupe'")
-    
+    cur = connection.cursor()
+    datos = cur.execute("select * from profesores")
+    print(datos)
     # Close the connection when you're done working with the database
     connection.close()
     print("Connection closed successfully.")
 except psycopg2.Error as e:
     print("Error: Could not connect to the PostgreSQL database.")
     print(e)
-
