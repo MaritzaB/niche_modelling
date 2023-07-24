@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install latex2html --yes
 
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends \
+    libpq-dev gcc \
     gettext-base \
     git \
     make \
@@ -35,5 +36,5 @@ RUN pip install --upgrade \
     imblearn \
     openpyxl \
     xarray \
-    psycopg2-binary \
+    psycopg2 \
     sqlalchemy

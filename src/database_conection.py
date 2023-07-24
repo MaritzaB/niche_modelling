@@ -10,13 +10,17 @@ db_params = {
 
 try:
     connection = psycopg2.connect(**db_params)
+    cur = connection.cursor()
     print("Connection to PostgreSQL database successful!")
 
     # Your database operations go here
-    cur = connection.cursor()
-    datos = cur.execute("select * from profesores")
-    print(datos)
+    query = '''select * from "gps-albatros-isla-guadalupe" limit 10;'''
+    cur.execute(query)
+    results = cur.fetchall()
+    print(results)
+
     # Close the connection when you're done working with the database
+    cur.close
     connection.close()
     print("Connection closed successfully.")
 except psycopg2.Error as e:
