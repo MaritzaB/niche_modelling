@@ -42,3 +42,12 @@ query = select(*[func.count(albatross.columns.name.distinct())])
 print(query)
 results = connection.execute(query).scalar()
 print(results)
+
+# Query para contar total de fechas por nombre
+print(f'\nQuery para contar fechas por nombre')
+count_dates = func.count(albatross.columns.date.distinct().label('total_dates'))
+query = select(*[albatross.columns.name , count_dates])
+query = query.group_by('name')
+print(query)
+results = connection.execute(query).fetchall()
+print(results[0:])

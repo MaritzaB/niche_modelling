@@ -1,5 +1,9 @@
 # niche_modelling
 
+Contiene ejemplos de uso de las bibliotecas `psycopg2` y `sqlalchemy`. Con ellas
+podemos ejecutar las consultas realizadas para la base de datos de trayectorias
+de albatros.
+
 ## Sources of information. Videos.
 
 - [Ecological niche modelling. Tutorial.](https://www.youtube.com/watch?v=2gMM3gCwuRM&list=PLRyq_4VPZ9g-jDZNdJ1d4WgnR662kZG1C)
