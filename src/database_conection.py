@@ -1,4 +1,5 @@
 import psycopg2, psycopg2.extras
+import pandas as pd
 
 db_params = {
     "dbname": "metro_cdmx",
@@ -17,7 +18,12 @@ try:
     query = '''select * from "gps-albatros-isla-guadalupe" limit 10;'''
     cur.execute(query)
     results = cur.fetchall()
-    print(results)
+    column_names = [desc[0] for desc in cur.description]
+
+    # Convert data into DataFrame
+    df = pd.DataFrame(results)
+    df.columns = column_names
+    print(df)
 
     # Close the connection when you're done working with the database
     cur.close
