@@ -29,8 +29,8 @@ metadata.reflect(bind=engine)
 # Set connection
 connection = engine.connect()
 
-query = select(*[albatross.columns.date])
-query = query.order_by(desc('date'))
+query = select(*[albatross.columns.date,albatross.columns.name])
+query = query.order_by(desc('date'), 'name')
 print(query)
 results = connection.execute(query).fetchall()
 
