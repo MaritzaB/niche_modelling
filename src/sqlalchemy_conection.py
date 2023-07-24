@@ -30,8 +30,8 @@ metadata.reflect(bind=engine)
 connection = engine.connect()
 
 query = select(*[albatross])
+query = query.order_by('date')
 print(query)
-
 results = connection.execute(query).fetchall()
 
-print(results[0][1])
+print(results[0][:])
