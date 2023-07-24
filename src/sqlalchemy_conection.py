@@ -1,5 +1,5 @@
 import psycopg2
-from sqlalchemy import create_engine, URL, MetaData, Table, select, inspect
+from sqlalchemy import create_engine, URL, MetaData, Table, select, inspect, desc
 
 database_url = URL.create(
     "postgresql+psycopg2",
@@ -29,9 +29,9 @@ metadata.reflect(bind=engine)
 # Set connection
 connection = engine.connect()
 
-query = select(*[albatross])
-query = query.order_by('date')
+query = select(*[albatross.columns.date])
+query = query.order_by(desc('date'))
 print(query)
 results = connection.execute(query).fetchall()
 
-print(results[0][:])
+print(results[:10])
