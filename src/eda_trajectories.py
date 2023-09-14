@@ -1,5 +1,6 @@
 from database_connection import trajectories_df
 import pandas as pd
+from pandasql import sqldf
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -14,8 +15,8 @@ trajectories_df["date"] = trajectories_df["date"].astype("datetime64[ns]")
 print("Dataframe description: \n", trajectories_df.describe())
 
 ## Cuenta datos de datos categóricos
-#print(trajectories_df.value_counts("date"))
-#print(trajectories_df.value_counts("name"))
+print(trajectories_df.value_counts("date"))
+print(trajectories_df.value_counts("name"))
 
 plt.figure()
 sns.histplot(data=trajectories_df, x="longitude", binwidth=0.5)
@@ -32,3 +33,12 @@ plt.savefig("images/boxplot.longitude.png")
 plt.figure()
 sns.boxplot(data=trajectories_df, x="latitude")
 plt.savefig("images/boxplot.latitude.png")
+
+query_dates_by_year = '''
+    select
+	substring(date, 1,4) as año,
+	count(distinct date) as numero_fechas
+    from trajectories_df
+    group by substring(date, 1,4);'''
+    
+print(sqldf(query_dates_by_year))
