@@ -31,3 +31,4 @@ column_names = [desc[0] for desc in cur.description]
 # Convert data into DataFrame
 trajectories_df = pd.DataFrame(results)
 trajectories_df.columns = column_names
+trajectories_df.to_csv('data/trajectories.csv', index=False)
