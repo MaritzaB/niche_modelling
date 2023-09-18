@@ -1,5 +1,5 @@
 up:
-	docker network connect qgis_devtools_postgis_net 74c7f3100f7e
+	docker network connect qgis_devtools_postgis_net e9a00037d97c
 
 connection:
 	python3 src/database_conection.py
@@ -10,4 +10,4 @@ disconnection:
 clean:
 	rm --force -R src/__pycache__/
 	rm --force -R images/*
-	rm --force data/
+	rm --force -R src/data/

@@ -35,4 +35,5 @@ RUN pip install --upgrade \
     openpyxl \
     xarray \
     psycopg2 \
-    sqlalchemy
+    sqlalchemy \
+    basemap

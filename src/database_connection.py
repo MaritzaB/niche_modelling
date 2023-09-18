@@ -1,5 +1,6 @@
 import psycopg2, psycopg2.extras
 import pandas as pd
+import os
 
 db_params = {
     "dbname": "metro_cdmx",
@@ -23,7 +24,7 @@ def connection(db_parameters):
 cur = connection(db_params)
 
 # Database operations
-query = '''select * from "gps-albatros-isla-guadalupe";'''
+query = '''select * from "albatros_seasons";'''
 cur.execute(query)
 results = cur.fetchall()
 column_names = [desc[0] for desc in cur.description]
@@ -31,4 +32,5 @@ column_names = [desc[0] for desc in cur.description]
 # Convert data into DataFrame
 trajectories_df = pd.DataFrame(results)
 trajectories_df.columns = column_names
+os.mkdir('data')
 trajectories_df.to_csv('data/trajectories.csv', index=False)
