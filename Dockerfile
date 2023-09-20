@@ -36,4 +36,5 @@ RUN pip install --upgrade \
     xarray \
     psycopg2 \
     sqlalchemy \
-    basemap
+    cdsapi \
+    netcdf4
