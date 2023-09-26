@@ -9,5 +9,4 @@ disconnection:
 
 clean:
 	rm --force -R src/__pycache__/
-	rm --force -R images/*
-	rm --force -R src/data/
+	rm --force -R images/*.png
