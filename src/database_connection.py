@@ -24,13 +24,38 @@ def connection(db_parameters):
 cur = connection(db_params)
 
 # Database operations
-query = '''select * from "albatros_seasons";'''
-cur.execute(query)
+query_trayectorias = '''
+    select 
+        id, ST_AsText(geom) as geom, 
+        ST_AsEWKT(geom) as ewkt,
+        date, latitude, longitude,
+        name, season
+    from "albatros_seasons";
+'''
+
+cur.execute(query_trayectorias)
 results = cur.fetchall()
 column_names = [desc[0] for desc in cur.description]
 
 # Convert data into DataFrame
 trajectories_df = pd.DataFrame(results)
 trajectories_df.columns = column_names
-os.mkdir('data')
-trajectories_df.to_csv('data/trajectories.csv', index=False)
+#os.mkdir('data')
+
+trajectories_df.to_csv('src/data/trajectories.csv', index=False)
+print('Data saved in data/trajectories.csv')
+
+query_shapefile = '''
+    select id, ST_AsText(geom) as geom, ST_AsEWKT(geom) as ewkt, country
+    from "americas";
+'''
+
+cur.execute(query_shapefile)
+shapefile = cur.fetchall()
+columns_shapefile = [desc[0] for desc in cur.description]
+
+# Convert data into DataFrame
+shapefile_df = pd.DataFrame(shapefile)
+shapefile_df.columns = columns_shapefile
+shapefile_df.to_csv('src/data/americas_shapefile.csv', index=False)
+print('Data saved in data/americas_shapefile.csv')

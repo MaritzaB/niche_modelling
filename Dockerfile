@@ -37,4 +37,8 @@ RUN pip install --upgrade \
     psycopg2 \
     sqlalchemy \
     cdsapi \
-    netcdf4
+    netcdf4 \
+    geopandas \
+    branca \
+    folium \
+    mapclassify
