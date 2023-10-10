@@ -2,7 +2,7 @@ up:
 	docker network connect qgis_devtools_postgis_net e9a00037d97c
 
 connection:
-	python3 src/database_conection.py
+	python3 src/database_connection.py
 
 disconnection:
 	python3 src/database_disconnection.py
