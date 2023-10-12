@@ -29,8 +29,9 @@ query_trayectorias = '''
         id, ST_AsText(geom) as geom, 
         ST_AsEWKT(geom) as ewkt,
         date, latitude, longitude,
-        name, season
-    from "albatros_seasons";
+        name, season,
+        spheroid_dist_to_colony
+    from "albatros_spheroid_distance";
 '''
 
 cur.execute(query_trayectorias)
