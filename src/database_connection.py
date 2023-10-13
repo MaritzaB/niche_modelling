@@ -26,12 +26,12 @@ cur = connection(db_params)
 # Database operations
 query_trayectorias = '''
     select 
-        id, ST_AsText(geom) as geom, 
-        ST_AsEWKT(geom) as ewkt,
+        id, ST_AsText(geom) as geom,
         date, latitude, longitude,
         name, season,
-        spheroid_dist_to_colony
-    from "albatros_spheroid_distance";
+        spheroid_dist_to_colony,
+        sst
+    from "albatros_v01";
 '''
 
 cur.execute(query_trayectorias)
