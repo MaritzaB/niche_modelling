@@ -17,6 +17,7 @@ RUN apt-get update && \
     git \
     make \
     pandoc \
+    texlive-xetex --yes \
     python3 \
     python3-dev \
     python3-pip
