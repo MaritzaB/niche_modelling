@@ -1,0 +1,19 @@
+version: '3.1'
+
+networks:
+  default:
+    external: true
+    name: qgis_devtools_postgis_net
+
+services:
+  niche-modelling:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: niche-modelling
+    image: niche-modelling
+    command: bash -c "cd /workdir"
+    volumes:
+      - ${PWD}:/workdir
+    networks:
+      - default

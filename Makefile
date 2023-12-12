@@ -1,5 +1,5 @@
 up:
-	docker network connect qgis_devtools_postgis_net e9a00037d97c
+	docker compose run --workdir /workdir niche-modelling bash -c "cd /workdir && bash"
 
 connection:
 	python3 src/database_connection.py
