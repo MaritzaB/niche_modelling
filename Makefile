@@ -10,3 +10,4 @@ disconnection:
 clean:
 	rm --force -R src/__pycache__/
 	rm --force -R images/*.png
+	rm --force -R src/notebooks/__pycache__/
