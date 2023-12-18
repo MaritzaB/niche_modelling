@@ -1,3 +1,5 @@
+import netCDF4 as nc
+
 def get_points(trayectories_df, date):
     points = trayectories_df[trayectories_df['date'] == date]
     return points
@@ -20,15 +22,16 @@ def get_values(longitude, latitude, variable, var_name, points):
     points.loc[:,var_name] = var_value_points
     return points
 
-def select_netCDf(filename, date, var_name):
-    # If filename exists the open it and get lat, lon and SST, else SST = 'NA'
-    nc_file = nc.Dataset(filename)
-    print(nc_file.variables.keys())
-    # Get lat and lon
-    lat = nc_file.variables['lat'][:]
-    lon = nc_file.variables['lon'][:]
-    # Get SST
-    variable = nc_file.variables[var_name][0][:,:]
-    # Close netCDF
-    nc_file.close()
-    return lat, lon, variable
+def extract_variables_from_netCDF(netCDF, x_var, y_var, var_name):
+    # Get variables
+    longitude = netCDF.variables[x_var][:]
+    latitude = netCDF.variables[y_var][:]
+    variable = netCDF.variables[var_name][:]
+    netCDF.close()
+    return longitude, latitude, variable
+
+def select_netCDf(path, end_of_filename, date, var_name):
+    date = date.replace('-', '')
+    filename = f'{path}{date}{end_of_filename}'
+    nc_file =  nc.Dataset(filename)
+    longitude, latitude, variable = extract_variables_from_netCDF(nc_file, 'longitude', 'latitude', var_name)
