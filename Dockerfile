@@ -20,8 +20,8 @@ RUN apt-get update && \
     texlive-xetex --yes \
     python3 \
     python3-dev \
-    python3-pip
-
+    python3-pip \
+    pytest
 
 RUN pip install --upgrade \
     black -U \
