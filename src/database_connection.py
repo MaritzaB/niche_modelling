@@ -41,7 +41,10 @@ column_names = [desc[0] for desc in cur.description]
 # Convert data into DataFrame
 trajectories_df = pd.DataFrame(results)
 trajectories_df.columns = column_names
-#os.mkdir('data')
+
+# Create directory if it doesn't exist
+if not os.path.exists('src/data'):
+    os.makedirs('src/data')
 
 trajectories_df.to_csv('src/data/trajectories.csv', index=False)
 print('Data saved in data/trajectories.csv')

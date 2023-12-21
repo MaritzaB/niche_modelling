@@ -20,8 +20,7 @@ RUN apt-get update && \
     texlive-xetex --yes \
     python3 \
     python3-dev \
-    python3-pip \
-    pytest
+    python3-pip
 
 RUN pip install --upgrade \
     black -U \
@@ -42,4 +41,5 @@ RUN pip install --upgrade \
     geopandas \
     branca \
     folium \
-    mapclassify
+    mapclassify \
+    pytest
