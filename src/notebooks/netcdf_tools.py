@@ -33,6 +33,8 @@ def extract_variables_from_netCDF(netCDF, x_var, y_var, var_name):
 def select_netCDf(path, end_of_filename, date, var_name):
     date = date.replace('-', '')
     filename = f'{path}{date}{end_of_filename}'
+    print(filename)
     nc_file =  nc.Dataset(filename)
-    longitude, latitude, variable = extract_variables_from_netCDF(nc_file, 'longitude', 'latitude', var_name)
+    print(nc_file.variables.keys())
+    longitude, latitude, variable = extract_variables_from_netCDF(nc_file, 'lon', 'lat', var_name)
     return longitude, latitude, variable
