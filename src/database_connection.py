@@ -30,8 +30,10 @@ query_trayectorias = '''
         date, latitude, longitude,
         name, season,
         spheroid_dist_to_colony,
-        sst
-    from "albatros_v01";
+        sst,
+        wnd_ucmp_height_above_ground,
+        wnd_vcmp_height_above_ground
+    from "albatros_v02";
 '''
 
 cur.execute(query_trayectorias)
