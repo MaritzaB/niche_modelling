@@ -29,15 +29,16 @@ def select_chlc_netCDf(dir, date):
     # Cambia formato de yyyy-mm-dd a yyyymmdd
     date = date.replace('-', '')
     chlc_data_ext = 'ESACCI-OC-L3S-CHLOR_A-MERGED-1D_DAILY_4km_GEO_PML_OCx-'
-    filename = f"{dir}/{chlc_data_ext}{date}-fv6.0.nc"
+    filename = f"{dir}/noaacwNPPVIIRSSQchlaMonthly_9637_0f53_01f6_U1702510691333.nc"
     # If filename exists the open it and get lat, lon and SST, else SST = 'NA'
     nc_file = nc.Dataset(filename)
     print(nc_file.variables.keys())
     # Get lat and lon
-    lat = nc_file.variables['lat'][:]
-    lon = nc_file.variables['lon'][:]
+    lat = nc_file.variables['latitude'][:]
+    lon = nc_file.variables['longitude'][:]
     # Get SST
     chlor_a = nc_file.variables['chlor_a'][0][:,:]
+    chlor_a = chlor_a[0,:,:]
     # Close netCDF
     nc_file.close()
     return lon, lat, chlor_a
@@ -61,8 +62,8 @@ def plot_netCDF_chlc(points_df, variable, date):
     max_lat = 51.25798
     min_lon = -158.980523
     max_lon = -114.42687
-    plt.figure(figsize=(12,10))
-    plt.pcolor(lon, lat, variable, cmap='jet')
+    plt.figure(figsize=(15,10))
+    plt.pcolor(lon, lat, variable, cmap='viridis')
     plt.colorbar()
     plt.clim(0, 1)
     #plt.scatter(trayectories_df['longitude'], trayectories_df['latitude'], s=0.1, c='DarkBlue')
@@ -93,7 +94,7 @@ fecha = dates_df['date'][0]
 
 #plot_netCDF_sst(trayectories_df, sst, fecha)
 
-path_chlc = 'src/data/chlc'
+path_chlc = 'src/data/chlc/2014/01/'
 lon, lat, chlor_a = select_chlc_netCDf(path_chlc, fecha)
 plot_netCDF_chlc(trayectories_df, chlor_a, fecha)
 
