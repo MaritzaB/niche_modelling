@@ -24,17 +24,13 @@ def connection(db_parameters):
 cur = connection(db_params)
 
 # Database operations
-query_trayectorias = '''
-    select 
-        id, ST_AsText(geom) as geom,
-        date, latitude, longitude,
-        name, season,
-        spheroid_dist_to_colony,
-        sst,
-        wnd_ucmp_height_above_ground,
-        wnd_vcmp_height_above_ground
-    from "albatros_v02";
-'''
+# Open the file in read mode ('r')
+with open('src/db_query.sql', 'r') as file:
+    # Read the entire file content
+    database = file.read()
+
+print(database)
+query_trayectorias = database
 
 cur.execute(query_trayectorias)
 results = cur.fetchall()
