@@ -13,6 +13,7 @@ clean:
 	rm --force -R images/*.png
 	rm --force -R src/notebooks/__pycache__/
 	rm --force -R tests/__pycache__
+	rm --force -R __pycache__
 	clear
 
 tests:
