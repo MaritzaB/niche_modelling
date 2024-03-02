@@ -23,23 +23,25 @@ RUN apt-get update && \
     python3-pip
 
 RUN pip install --upgrade \
-    black -U \
-    ipykernel \
-    matplotlib \
-    numpy \
-    pandas \
-    pytest \
     -U scikit-learn \
-    seaborn \
-    imblearn \
-    openpyxl \
-    xarray \
-    psycopg2 \
-    sqlalchemy \
-    cdsapi \
-    netcdf4 \
-    geopandas \
+    black -U \
     branca \
+    cdsapi \
     folium \
+    geopandas \
+    geopy \
+    imblearn \
+    ipykernel \
     mapclassify \
-    pytest
+    matplotlib \
+    netcdf4 \
+    numpy \
+    openpyxl \
+    pandas \
+    psycopg2 \
+    pytest \
+    pytest \
+    rasterio \
+    seaborn \
+    sqlalchemy \
+    xarray
