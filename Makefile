@@ -14,6 +14,7 @@ clean:
 	rm --force -R src/notebooks/__pycache__/
 	rm --force -R tests/__pycache__
 	rm --force -R __pycache__
+	rm src/data/*/*/processed/*.aux.xml
 	clear
 
 tests:
