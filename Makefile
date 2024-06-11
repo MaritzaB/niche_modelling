@@ -1,6 +1,10 @@
 .PHONY: tests clean
 up:
-	docker compose run --workdir /workdir niche-modelling bash -c "cd /workdir && bash"
+	docker compose up --build --detach
+	docker compose exec niche-modelling bash -c "cd /workdir && bash"
+
+down: 
+	docker compose down
 
 connection:
 	python3 src/database_connection.py
@@ -18,4 +22,5 @@ clean:
 	clear
 
 tests:
-	pytest --verbose tests/test_netcdf_tools.py
+	pytest --verbose tests/test_sample_raster_data.py
+#	pytest --verbose tests/test_netcdf_tools.py

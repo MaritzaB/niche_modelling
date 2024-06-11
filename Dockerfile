@@ -17,31 +17,30 @@ RUN apt-get update && \
     git \
     make \
     pandoc \
-    texlive-xetex --yes \
+    texlive-xetex \
     python3 \
     python3-dev \
     python3-pip
 
+# Crear un enlace simbólico para python y pip solo si no existen
+RUN if [ ! -e /usr/bin/python ]; then ln -s /usr/bin/python3 /usr/bin/python; fi && \
+    if [ ! -e /usr/bin/pip ]; then ln -s /usr/bin/pip3 /usr/bin/pip; fi
+
 RUN pip install --upgrade \
-    -U scikit-learn \
-    black -U \
-    branca \
-    cdsapi \
-    folium \
-    geopandas \
-    geopy \
-    imblearn \
+    jupyter \
     ipykernel \
-    mapclassify \
-    matplotlib \
-    netcdf4 \
     numpy \
-    openpyxl \
     pandas \
-    psycopg2 \
-    pytest \
-    pytest \
-    rasterio \
+    matplotlib \
+    scikit-learn \
     seaborn \
-    sqlalchemy \
-    xarray
+    psycopg2 \
+    sqlalchemy
+
+# Registra el kernel de Python en Jupyter
+RUN python -m ipykernel install --name docker_kernel --display-name "Python (Docker)"
+
+# Expone el puerto 8888 para Jupyter Notebook
+EXPOSE 8888
+
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''"]
