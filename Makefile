@@ -5,6 +5,7 @@ up:
 
 down: 
 	docker compose down
+	docker system prune --force
 
 connection:
 	python3 src/database_connection.py
