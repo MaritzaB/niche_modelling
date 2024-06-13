@@ -31,6 +31,7 @@ RUN pip install --upgrade \
     ipykernel \
     numpy \
     pandas \
+    basemap \
     geopandas \
     matplotlib \
     scikit-learn \
