@@ -1,44 +1,23 @@
 from database_connection import trajectories_df
 import pandas as pd
-from pandasql import sqldf
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
 
 print("Columnas del dataframe: \n", trajectories_df.columns)
 
-## Selecciona los primeros valores de las columnas de tipo "number"
+trajectories_df["date"] = pd.to_datetime(trajectories_df["year"].astype(str) + "-" + trajectories_df["month"].astype(str))
 print(trajectories_df.head())
-print(trajectories_df.select_dtypes("number").head())
+print(trajectories_df.info())
 
-trajectories_df["date"] = trajectories_df["date"].astype("datetime64[ns]")
-#print(trajectories_df.info())
-print("Dataframe description: \n", trajectories_df.describe())
+# Barplot del número de puntos por año y por mes
+sns.set(rc={'figure.figsize':(18, 10)})
+ax = sns.barplot(data=trajectories_df, x="year", y="number_of_points", hue="month", palette="tab10")
+ax.set_title("Cantidad de puntos de presencia por mes", fontsize=20)
+ax.set_xlabel("Año", fontsize=15)
+ax.set_ylabel("Cantidad de puntos", fontsize=15)
+ax.legend(title="Mes", title_fontsize="15", fontsize="12")
+os.makedirs("images", exist_ok=True)
+plt.savefig("images/barplot_number_of_points_by_year_and_month.png")
 
-## Cuenta datos de datos categóricos
-print(trajectories_df.value_counts("date"))
-print(trajectories_df.value_counts("name"))
 
-plt.figure()
-sns.histplot(data=trajectories_df, x="longitude", binwidth=0.5)
-plt.savefig("images/histogram_longitude.png")
-
-plt.figure()
-sns.histplot(data=trajectories_df, x="latitude", binwidth=0.5)
-plt.savefig("images/histogram_latitude.png")
-
-plt.figure()
-sns.boxplot(data=trajectories_df, x="longitude")
-plt.savefig("images/boxplot.longitude.png")
-
-plt.figure()
-sns.boxplot(data=trajectories_df, x="latitude")
-plt.savefig("images/boxplot.latitude.png")
-
-query_dates_by_year = '''
-    select
-	substring(date, 1,4) as año,
-	count(distinct date) as numero_fechas
-    from trajectories_df
-    group by substring(date, 1,4);'''
-    
-print(sqldf(query_dates_by_year))
