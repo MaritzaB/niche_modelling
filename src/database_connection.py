@@ -25,7 +25,8 @@ cur = connection(db_params)
 
 # Database operations
 # Open the file in read mode ('r')
-with open('src/db_query.sql', 'r') as file:
+#with open('src/db_query_grouped.sql', 'r') as file:
+with open('src/db_queries/db_query.sql', 'r') as file:
     # Read the entire file content
     database = file.read()
 
@@ -61,3 +62,17 @@ shapefile_df = pd.DataFrame(shapefile)
 shapefile_df.columns = columns_shapefile
 shapefile_df.to_csv('src/data/americas_shapefile.csv', index=False)
 print('Data saved in data/americas_shapefile.csv')
+
+# Execute query to count number of points
+with open('src/db_queries/count_data.sql', 'r') as file:
+    query_count_data = file.read()
+
+cur.execute(query_count_data)
+results = cur.fetchall()
+column_names = [desc[0] for desc in cur.description]
+
+# Convert data into DataFrame
+count_df = pd.DataFrame(results)
+count_df.columns = column_names
+count_df.to_csv('src/data/count_data.csv', index=False)
+print('Data saved in data/count_data.csv')
