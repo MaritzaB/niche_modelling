@@ -26,7 +26,7 @@ cur = connection(db_params)
 # Database operations
 # Open the file in read mode ('r')
 #with open('src/db_query_grouped.sql', 'r') as file:
-with open('src/db_queries/db_query.sql', 'r') as file:
+with open('src/db_queries/query_elapid.sql', 'r') as file:
     # Read the entire file content
     database = file.read()
 
