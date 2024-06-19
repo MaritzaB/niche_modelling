@@ -35,23 +35,24 @@ def get_coords_from_multipoints(geom):
 def get_rasters_list(year, month):
     raster_path = f'src/data/resampled_data/{year}/{month}'
     raster_dict = {
-        'chla': 'chlor_a_resampled.tif',
-        'easward_stress_bias': 'eastward_stress_bias.tif',
-        'eastward_stress_sdd': 'eastward_stress_sdd.tif',
-        'easward_stress': 'eastward_stress.tif',
-        'easward_wind_bias': 'eastward_wind_bias.tif',
-        'eastward_wind_sdd': 'eastward_wind_sdd.tif',
         'easward_wind': 'eastward_wind.tif',
-        'norward_stress_bias': 'northward_stress_bias.tif',
-        'northward_stress_sdd': 'northward_stress_sdd.tif',
-        'norward_stress': 'northward_stress.tif',
-        'norward_wind_bias': 'northward_wind_bias.tif',
-        'northward_wind_sdd': 'northward_wind_sdd.tif',
         'norward_wind': 'northward_wind.tif',
-        'sst': 'sst_resampled.tif'
+        'sst': 'sst_resampled.tif',
+        'chla': 'chlor_a_resampled.tif',
+#        'easward_stress_bias': 'eastward_stress_bias.tif',
+#        'eastward_stress_sdd': 'eastward_stress_sdd.tif',
+#        'easward_stress': 'eastward_stress.tif',
+#        'easward_wind_bias': 'eastward_wind_bias.tif',
+#        'eastward_wind_sdd': 'eastward_wind_sdd.tif',
+#        'norward_stress_bias': 'northward_stress_bias.tif',
+#        'northward_stress_sdd': 'northward_stress_sdd.tif',
+#        'norward_stress': 'northward_stress.tif',
+#        'norward_wind_bias': 'northward_wind_bias.tif',
+#        'northward_wind_sdd': 'northward_wind_sdd.tif',
     }
     rasters = [os.path.join(raster_path, raster) for raster in raster_dict.values()]
-    return rasters
+    labels = list(raster_dict.keys())
+    return rasters, labels
 
 def sample_raster(coords, year, month, raster):
     # Asegurar que las muestras si correspondan a los puntos de la geometría
@@ -59,10 +60,10 @@ def sample_raster(coords, year, month, raster):
     values_df['year'] = [year] * len(coords)
     values_df['month'] = str(month).zfill(2)
     values_df['lon'], values_df['lat'] = zip(*coords)
-    print(values_df)
+    #print(values_df)
     # Get value of the raster in the coordinates
     with rasterio.open(raster) as src:
-        print(src.name)
+        #print(src.name)
         samples = list(src.sample(coords))
         # Combinar coordenadas y valores en un array de numpy
         #results = np.array([(lon, lat, val[0]) for (lat, lon), val in zip(coords, samples)])
@@ -83,15 +84,15 @@ def get_sample_values(file, year, month):
     #return values_df
 
 
-yearr = 2014
-monthh = 2
+#yearr = 2014
+#monthh = 2
 
-file = 'src/data/trajectories.csv'
-dates = get_years_months(file)
-geo_df = csv_to_geodataframe(file)
-points = get_coords_from_multipoints(geo_df['geometry'])
-raster = get_rasters_list(2014, '02')[0]
-sample_raster(points, yearr, monthh, raster)
+#file = 'src/data/trajectories.csv'
+#dates = get_years_months(file)
+#geo_df = csv_to_geodataframe(file)
+#points = get_coords_from_multipoints(geo_df['geometry'])
+#raster = get_rasters_list(2014, '02')[0]
+#sample_raster(points, yearr, monthh, raster)
 #concatenated_df = pd.DataFrame(columns=['year', 'month', 'lon', 'lat', 'sst', 'chla', 'ew', 'nw'])
 
 #for index, row in dates.iterrows():
