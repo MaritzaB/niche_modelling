@@ -20,6 +20,7 @@ def create_annots(data, bg_data, year, month):
     # Subselect points and rasters for January 2014
     data_january = data[(data['year'] == year) & (data['month'] == month)]
     rasters, labels = get_rasters_list(year=year, month=str(month).zfill(2))
+    print(labels)
 
     # Create GeoDataFrames
     presence =  gpd.GeoDataFrame(data_january, geometry=gpd.points_from_xy(data_january['longitude'], data_january['latitude']), crs='EPSG:4326')
@@ -35,11 +36,13 @@ def create_annots(data, bg_data, year, month):
     annotated = elapid.annotate(merged, rasters, drop_na=True, quiet=True)
     annotated['year'] = year
     annotated['month'] = month
+    # Rename the columns
+    for i, label in enumerate(labels):
+        annotated = annotated.rename(columns={f'b{str(i+1)}': label})
     return annotated
 
-import pandas as pd
-
-years = [year for year in range(2014, 2019)]
+#years = [2014,2015,2018]
+years = [2014,2015,2016,2017,2018]
 month = 2
 
 annotated_list = [create_annots(data, bg_data, year, month) for year in years]
