@@ -24,55 +24,36 @@ def connection(db_parameters):
 cur = connection(db_params)
 
 # Database operations
-# Open the file in read mode ('r')
-#with open('src/db_query_grouped.sql', 'r') as file:
-with open('src/db_queries/query_elapid.sql', 'r') as file:
+
+databases = {
+    # name of the database: path to the query file
+    'trajectories': 'src/db_queries/query_elapid.sql',
+    'count_data': 'src/db_queries/count_data.sql',
+     'background_points': 'src/db_queries/background_points.sql',
+     'americas_shapefile': 'src/db_queries/americas_shapefile.sql',
+}
+
+for db_name, db_file in databases.items():
+    with open(db_file, 'r') as file:
     # Read the entire file content
-    database = file.read()
+        database = file.read()
+        print('Querying data: ', db_name)
+    
+    # Execute the query
+    query = database
+    cur.execute(query)
+    results = cur.fetchall()
+    column_names = [desc[0] for desc in cur.description]
 
-print(database)
-query_trayectorias = database
+    # Convert data into DataFrame
+    df = f"{db_name}_df"
+    df = pd.DataFrame(results)
+    df.columns = column_names
 
-cur.execute(query_trayectorias)
-results = cur.fetchall()
-column_names = [desc[0] for desc in cur.description]
+    # Create directory if it doesn't exist
+    dir = 'src/data'
+    if not os.path.exists(dir):
+        os.makedirs(dir)
 
-# Convert data into DataFrame
-trajectories_df = pd.DataFrame(results)
-trajectories_df.columns = column_names
-
-# Create directory if it doesn't exist
-if not os.path.exists('src/data'):
-    os.makedirs('src/data')
-
-trajectories_df.to_csv('src/data/trajectories.csv', index=False)
-print('Data saved in data/trajectories.csv')
-
-query_shapefile = '''
-    select id, ST_AsText(geom) as geom, ST_AsEWKT(geom) as ewkt, country
-    from "americas";
-'''
-
-cur.execute(query_shapefile)
-shapefile = cur.fetchall()
-columns_shapefile = [desc[0] for desc in cur.description]
-
-# Convert data into DataFrame
-shapefile_df = pd.DataFrame(shapefile)
-shapefile_df.columns = columns_shapefile
-shapefile_df.to_csv('src/data/americas_shapefile.csv', index=False)
-print('Data saved in data/americas_shapefile.csv')
-
-# Execute query to count number of points
-with open('src/db_queries/count_data.sql', 'r') as file:
-    query_count_data = file.read()
-
-cur.execute(query_count_data)
-results = cur.fetchall()
-column_names = [desc[0] for desc in cur.description]
-
-# Convert data into DataFrame
-count_df = pd.DataFrame(results)
-count_df.columns = column_names
-count_df.to_csv('src/data/count_data.csv', index=False)
-print('Data saved in data/count_data.csv')
+    df.to_csv(f'{dir}/{db_name}.csv', index=False)
+    print(f'Data saved in {dir}/{db_name}.csv')
