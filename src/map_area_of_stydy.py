@@ -4,7 +4,7 @@ from shapely.wkt import loads
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import cartopy.crs as ccrs
-import cartopy.feature as cfeature
+import os
 
 # Cargar el archivo CSV
 file_path = "src/data/continents_shapefile.csv"
@@ -165,8 +165,12 @@ fig.add_artist(line2)
 # Ajustar disposición
 plt.tight_layout()
 
-# Guardar la figura
-output_file = "mapa_isla_guadalupe_zoom.png"
+# Guardar la figura en figures/, creando la carpeta si no existe
+figures_dir = "figures/"
+if not os.path.exists(figures_dir):
+    os.makedirs(figures_dir)
+output_file = figures_dir + "area_of_study.png"
+
 plt.savefig(output_file, dpi=500, bbox_inches="tight")
 plt.close()
 

@@ -16,9 +16,11 @@ disconnection:
 clean:
 	rm --force -R src/__pycache__/
 	rm --force -R images/*.png
+	rm --force -R figures/*.png
 	rm --force -R src/notebooks/__pycache__/
 	rm --force -R tests/__pycache__
 	rm --force -R __pycache__
+	rm --force -R .pytest_cache
 	rm --force -R src/data/*/*/processed/*.aux.xml
 	clear
 
