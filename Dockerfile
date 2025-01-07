@@ -38,7 +38,8 @@ RUN pip install --upgrade \
     seaborn \
     psycopg2 \
     sqlalchemy \
-    elapid
+    elapid \
+    cartopy
 
 # Registra el kernel de Python en Jupyter
 RUN python -m ipykernel install --name docker_kernel --display-name "Python (Docker)"

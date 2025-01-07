@@ -4,12 +4,12 @@ networks:
     name: qgis_devtools_postgis_net
 
 services:
-  niche-modelling:
+  niche-modelling_python:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: niche-modelling
-    image: niche-modelling
+    container_name: niche-modelling_python
+    image: niche-modelling_python
     volumes:
       - ${PWD}:/workdir
     networks:

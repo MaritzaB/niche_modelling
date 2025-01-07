@@ -29,8 +29,11 @@ databases = {
     # name of the database: path to the query file
     'trajectories': 'src/db_queries/query_elapid.sql',
     'count_data': 'src/db_queries/count_data.sql',
-     'background_points': 'src/db_queries/background_points.sql',
-     'americas_shapefile': 'src/db_queries/americas_shapefile.sql',
+    'background_points': 'src/db_queries/background_points.sql',
+    'americas_shapefile': 'src/db_queries/americas_shapefile.sql',
+    'continents_shapefile': 'src/db_queries/continents_shp.sql',
+    'convex_hull': 'src/db_queries/full_convexHull_albatross.sql',
+    'guadalupe_island': 'src/db_queries/guadalupe_island.sql',
 }
 
 for db_name, db_file in databases.items():

@@ -1,7 +1,7 @@
 .PHONY: tests clean
 up:
 	docker compose up --build --detach
-	docker compose exec niche-modelling bash -c "cd /workdir && bash"
+	docker compose exec niche-modelling_python bash -c "cd /workdir && bash"
 
 down: 
 	docker compose down
@@ -19,7 +19,7 @@ clean:
 	rm --force -R src/notebooks/__pycache__/
 	rm --force -R tests/__pycache__
 	rm --force -R __pycache__
-	rm src/data/*/*/processed/*.aux.xml
+	rm --force -R src/data/*/*/processed/*.aux.xml
 	clear
 
 tests:
